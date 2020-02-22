@@ -1,16 +1,52 @@
+import java.util.*;
+
 public class Carro {
 
+    public Object Porta;
     private  double velocidade;
-
-    private double valor;
 
     private  int marcha;
 
     private  double velocidadeMaxima;
 
-
-    public  void setVelocidadeMaxima(double velocidadeMaxima)
+    private  List<Porta>  portaList ;
+    
+    public  Carro(int numero_portas)
     {
+      portaList = new ArrayList<Porta>() ;
+      for( int i= 1 ; i < numero_portas ; i++){
+          Porta porta= new Porta();
+          porta.SetTrava(false);
+          porta.SetVidro(false);
+         portaList.add(porta);
+      }
+
+    }
+
+    public List<Carro.Porta> getPortaList() {
+        return portaList;
+    }
+
+    public void SetPorta(int corrente_porta, boolean vidro, boolean trava)
+   {
+            portaList.get(corrente_porta).SetVidro(vidro);
+            portaList.get(corrente_porta).SetTrava(trava);
+   }
+
+   public boolean GetPortaVidro(int corrente_porta)
+   {
+       if(portaList.isEmpty()) return  false;
+       return portaList.get(corrente_porta).GetVidro();
+   }
+
+   public boolean GetPortaTrava(int corrente_porta)
+   {
+       if(portaList.isEmpty()) return  false;
+        return portaList.get(corrente_porta).GetTrava();
+   }
+
+   public  void setVelocidadeMaxima(double velocidadeMaxima)
+   {
         if(velocidadeMaxima > 0) {
             this.velocidadeMaxima = velocidadeMaxima;
         }
@@ -77,10 +113,30 @@ public class Carro {
     public void freiar()
     {
         if(this.velocidadeMaxima - 30 <= 0) {
-            this.velocidade -= 30;
+            this.velocidade += 30;
         }
 
     }
+
+    public class  Porta
+    {
+        private  boolean vidro;
+        private  boolean trava;
+
+        public  void  SetVidro(boolean vidro)
+        {
+            this.vidro = vidro;
+        }
+
+        public  void  SetTrava(boolean trava)
+        {
+            this.trava = vidro;
+        }
+
+        public boolean GetVidro() {return  this.vidro;}
+        public boolean GetTrava(){return  this.trava;}
+    }
+
 
 
 }
